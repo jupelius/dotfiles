@@ -69,6 +69,8 @@ map <C-K>S <ESC>:mksession!<CR>
 map <C-K>Q <ESC>:wa<CR>:mksession!<CR>:qa<CR>
 " Add inclusion guard to current buffer
 map <C-K>i <ESC>:call WriteIncludeGuard()<CR>
+" Add C compilation directive
+map <C-K>e <ESC>:call WriteExternCDef()<CR>
 
 """ Functions
 
@@ -83,4 +85,14 @@ function! WriteIncludeGuard()
 		call append(0, ['#ifndef ' . name, '#define ' . name])
 		call append(line('$'), '#endif /* ' . name . ' */')
 	endif
+endfunction
+
+" C compilation defines for C++
+function! WriteExternCDef()
+	call append(0, '#ifdef __cplusplus')
+	call append(1, 'extern "C" {')
+	call append(2, '#endif')
+	call append(line('$'), '#ifdef __cplusplus')
+	call append(line('$'), '}')
+	call append(line('$'), '#endif')
 endfunction

@@ -1,7 +1,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PS1='[\u@\h \W]\$ '
+#PS1='[\u@\h \W]\$ '
+PS1='[\[\e[1m\]\u@\h\[\e[0m\] \[\e[0;32m\]\W\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
 
 export HISTCONTROL=ignoredups
 export TERM=xterm-256color
@@ -21,6 +22,7 @@ fi
 # tarball <tarball_name> <target>
 alias tarball='tar cvzf'
 alias ret='tmux attach'
+alias fics-chess='xboard -ics -icshost freechess.org'
 
 ixcat() {
 	if [ "$1" ]
