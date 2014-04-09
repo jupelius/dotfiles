@@ -2,7 +2,11 @@
 [[ $- != *i* ]] && return
 
 #PS1='[\u@\h \W]\$ '
-PS1='[\[\e[1m\]\u@\h\[\e[0m\] \[\e[0;32m\]\W\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
+if [ -n "$SSH_CLIENT" ]; then
+	PS1='[\[\e[1m\]\u@\h\[\e[0m\] \[\e[0;31m\]\W\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
+else
+	PS1='[\[\e[1m\]\u@\h\[\e[0m\] \[\e[0;32m\]\W\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
+fi
 
 export HISTCONTROL=ignoredups
 export TERM=xterm-256color
