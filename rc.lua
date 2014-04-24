@@ -22,15 +22,15 @@ beautiful.wallpaper = "/home/jupelius/Wallpapers/planeetta.jpg"
 local audio_channel = "Master"
 
 function volume_up()
-	os.execute("amixer sset " .. channel .. " 2%+")
+	os.execute("amixer sset " .. audio_channel .. " 2%+")
 end
 
 function volume_down()
-	os.execute("amixer sset " .. channel .. " 2%-")
+	os.execute("amixer sset " .. audio_channel .. " 2%-")
 end
 
 function toggle_mute()
-	os.execute("amixer sset " .. channel .. " toggle playback")
+	os.execute("amixer sset " .. audio_channel .. " toggle playback")
 end
 
 function ncmpcpp_next_song()
