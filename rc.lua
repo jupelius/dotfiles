@@ -16,11 +16,8 @@ local mousefocus_enabled = true
 -- Added by Jupelius: Different border for Konsole windows
 local termcolor_focus = "#0080FF"
 local termcolor_unfocus = "#0B243B"
-
--- Screen capture file name
-local scrot_filename = "'~/screenshots/%Y-%m-%d-%H%M%S.png'"
 -- Wallpaper
-beautiful.wallpaper = "/home/jupelius/Wallpapers/korput.png"
+beautiful.wallpaper = "/home/jupelius/Wallpapers/planeetta.jpg"
 
 local audio_channel = "Master"
 
@@ -67,15 +64,13 @@ do
 			title = "Oops, an error happened!",
 			text = err })
 		in_error = false
-		end)
+	end)
 end
 
 beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-
 terminal = "konsole"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-
 modkey = "Mod4"
 
 local layouts =
@@ -84,8 +79,8 @@ local layouts =
     awful.layout.suit.tile,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
     --awful.layout.suit.spiral,
     --awful.layout.suit.spiral.dwindle,
     awful.layout.suit.floating,
@@ -97,30 +92,40 @@ local layouts =
 -- Wallpaper
 if beautiful.wallpaper then
     for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+        gears.wallpaper.maximized(beautiful.wallpaper, s, false)
     end
 end
-
 -- Define a tag table which hold all screen tags.
+-- Added by Jupelius: "Connect" certain tags
+-- If you select a connected tag it will select the corresponding tag in other screens too
 tags = {
-	names_primary = { "www", "irc", "coding", 4, 5, 6, 7, 8, 9 },
-	names_secondary = { "irc", "music", "skype", "coding", 5, 6, 7, 8, 9 },
+	names_primary = { "www", "torrents", "coding", 4, 5, 6, 7, 8, "chess" },
+	names_secondary = { "irc", "music", "coding", "skype", 5, 6, 7, 8, "chess" },
+	names_default = { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+	connected = { false, false, false, false, false, false, false, false, false },
 }
+
 for s = 1, screen.count() do
-    -- Each screen has its own tag table.
-	if s == 2 then
+	if s == 1 then
+	    tags[s] = awful.tag(tags.names_primary, s, layouts[1])
+	elseif s == 2 then
 	    tags[s] = awful.tag(tags.names_secondary, s, layouts[3])
 	else
-	    tags[s] = awful.tag(tags.names_primary, s, layouts[1])
+	    tags[s] = awful.tag(tags.names_default, s, layouts[1])
+	end
+
+	-- Set the default state of connected tags
+	for i, tag in pairs(awful.tag.gettags(s)) do
+		awful.tag.setproperty(tag, "connected", tags.connected[i])
 	end
 end
 
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", awesome.quit }
+	{ "manual", terminal .. " -e man awesome" },
+	{ "edit config", editor_cmd .. " " .. awesome.conffile },
+	{ "restart", awesome.restart },
+	{ "quit", awesome.quit }
 }
 -- Added by Jupelius
 myownmenu = {
@@ -159,7 +164,7 @@ mytaglist.buttons = awful.util.table.join(
 	awful.button({ }, 3, awful.tag.viewtoggle),
 	awful.button({ modkey }, 3, awful.client.toggletag),
 	awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
-	awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end) )
+	awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end))
 
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
@@ -359,6 +364,10 @@ for i = 1, keynumber do
 				awful.tag.viewonly(tags[screen][i])
 			end
 		end),
+		awful.key({ modkey, "Mod1" }, "#" .. i + 9,
+			function ()
+				toggle_connection(tags[mouse.screen][i])
+			end),
 	awful.key({ modkey, "Control" }, "#" .. i + 9,
 		function ()
 			local screen = mouse.screen
@@ -411,7 +420,6 @@ awful.rules.rules = {
 			"Steam",
 			"Gwenview" } },
 		properties = { floating = true } },
-	-- For developing
 	{ rule = { instance = "plugin-container" }, properties = { floating = true } },
 	{ rule = { instance = "exe", class="Exe" }, properties = { floating = true } },
 	-- Xfe's archive extract
@@ -477,7 +485,6 @@ client.connect_signal("manage", function (c, startup)
 		layout:set_left(left_layout)
 		layout:set_right(right_layout)
 		layout:set_middle(title)
-
 		awful.titlebar(c):set_widget(layout)
 	end
 end)
@@ -500,3 +507,47 @@ function(c)
 		c.border_color = termcolor_unfocus
 	end
 end)
+
+-- Added by Jupelius: Handle "connected" tags
+-- If you switch to a connected tag it switches to it in other screens too
+tag.connect_signal("property::selected",
+function(t)
+	if awful.tag.getproperty(t, "connected") and t.selected then
+		local tag_num = awful.tag.getidx(t)
+
+		for s = 1, screen.count() do
+			if s ~= awful.tag.getscreen(t) then
+				local tags = awful.tag.gettags(s)
+				if tags[tag_num] and not tags[tag_num].selected then
+					awful.tag.viewmore({ tags[tag_num] }, s)
+				end
+			end
+		end
+	end
+end)
+
+-- Toggles the connection state of the given tag
+function toggle_connection(tag)
+	local tag_num = awful.tag.getidx(tag)
+	local newstate = true
+
+	if awful.tag.getproperty(tag, "connected") then
+		newstate = false
+	end
+
+	for s = 1, screen.count() do
+		local tags = awful.tag.gettags(s)
+		awful.tag.setproperty(tags[tag_num], "connected", newstate)
+	end
+
+	local msg = ""
+	if not newstate then
+		msg = "dis"
+	end
+
+	naughty.notify({
+		title = "Tag " .. tag_num,
+		text = "Tag is now " .. msg .. "connected.",
+		screen = awful.tag.getscreen(tag),
+	})
+end
