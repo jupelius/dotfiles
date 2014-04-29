@@ -76,12 +76,12 @@ map <C-K>e <ESC>:call WriteExternCDef()<CR>
 
 " Writes multiple inclusion guard defines to current buffer
 function! WriteIncludeGuard()
-	let name = expand("%")
+	let name = expand("%:t")
 	
 	if empty(name)
 		echom "No file name!"
 	else
-		let name = substitute(toupper(name) . '_GUARD', '\.', '_', '')
+		let name = substitute(toupper(name), '\W', '_', 'g') . '_GUARD'
 		call append(0, ['#ifndef ' . name, '#define ' . name])
 		call append(line('$'), '#endif /* ' . name . ' */')
 	endif
