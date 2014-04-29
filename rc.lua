@@ -45,6 +45,10 @@ function lock_session()
 	awful.util.spawn("xlock -mode blank")
 end
 
+function open_filebrowser()
+	awful.util.spawn("thunar")
+end
+
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -290,15 +294,16 @@ globalkeys = awful.util.table.join(
 
 	-- Standard program
 	awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+	awful.key({ modkey,           }, "d",      function () open_filebrowser() end),
 
-	awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-	awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-	awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-	awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-	awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-	awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
-	awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-	awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+	awful.key({ modkey,           }, "l",      function () awful.tag.incmwfact( 0.05)    end),
+	awful.key({ modkey,           }, "h",      function () awful.tag.incmwfact(-0.05)    end),
+	awful.key({ modkey, "Shift"   }, "h",      function () awful.tag.incnmaster( 1)      end),
+	awful.key({ modkey, "Shift"   }, "l",      function () awful.tag.incnmaster(-1)      end),
+	awful.key({ modkey, "Control" }, "h",      function () awful.tag.incncol( 1)         end),
+	awful.key({ modkey, "Control" }, "l",      function () awful.tag.incncol(-1)         end),
+	awful.key({ modkey,           }, "space",  function () awful.layout.inc(layouts,  1) end),
+	awful.key({ modkey, "Shift"   }, "space",  function () awful.layout.inc(layouts, -1) end),
 	awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
 	-- Prompt
@@ -411,6 +416,7 @@ awful.rules.rules = {
 	-- Floating windows by class
 	{ rule_any = { class = {
 			"Smplayer",
+			"smplayer",
 			"Gimp",
 			"Wine",
 			"Ark",
@@ -509,7 +515,8 @@ function(c)
 end)
 
 -- Added by Jupelius: Handle "connected" tags
--- If you switch to a connected tag it switches to it in other screens too
+-- Add 'capi.tag.add_signal("property::connected")' to /usr/share/awesome/awful/tag.lua
+-- to get rid of the warnings
 tag.connect_signal("property::selected",
 function(t)
 	if awful.tag.getproperty(t, "connected") and t.selected then
