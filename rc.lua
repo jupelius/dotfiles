@@ -16,7 +16,7 @@ local mousefocus_enabled = true
 -- Added by Jupelius: Different border for Konsole windows
 local termcolor_focus = "#0080FF"
 local termcolor_unfocus = "#0B243B"
--- Clock widget format
+-- Clock widget format, delete this if you want to use the default format
 local clock_format = " %A %d.%m, %H:%M (Week %V) "
 -- Wallpaper file
 beautiful.wallpaper = "/home/jupelius/Wallpapers/korput.png"
@@ -157,7 +157,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
 -- function textclock.new(format, timeout)
-mytextclock = awful.widget.textclock(clock_format, 30)
+mytextclock = awful.widget.textclock(clock_format or nil, 30)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
