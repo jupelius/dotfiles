@@ -16,8 +16,15 @@ local mousefocus_enabled = true
 -- Added by Jupelius: Different border for Konsole windows
 local termcolor_focus = "#0080FF"
 local termcolor_unfocus = "#0B243B"
--- Wallpaper
-beautiful.wallpaper = "/home/jupelius/Wallpapers/planeetta.jpg"
+-- Clock widget format
+local clock_format = " %A %d.%m, %H:%M (Week %V) "
+-- Wallpaper file
+beautiful.wallpaper = "/home/jupelius/Wallpapers/korput.png"
+
+terminal = "konsole"
+editor = os.getenv("EDITOR") or "vim"
+editor_cmd = terminal .. " -e " .. editor
+modkey = "Mod4"
 
 local audio_channel = "Master"
 
@@ -71,12 +78,6 @@ do
 	end)
 end
 
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-terminal = "konsole"
-editor = os.getenv("EDITOR") or "vim"
-editor_cmd = terminal .. " -e " .. editor
-modkey = "Mod4"
-
 local layouts =
 {
     awful.layout.suit.tile.left,
@@ -93,12 +94,13 @@ local layouts =
     --awful.layout.suit.magnifier
 }
 
--- Wallpaper
+beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 if beautiful.wallpaper then
     for s = 1, screen.count() do
         gears.wallpaper.maximized(beautiful.wallpaper, s, false)
     end
 end
+
 -- Define a tag table which hold all screen tags.
 -- Added by Jupelius: "Connect" certain tags
 -- If you select a connected tag it will select the corresponding tag in other screens too
@@ -155,7 +157,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
 -- function textclock.new(format, timeout)
-mytextclock = awful.widget.textclock(" %A %d.%m, %H:%M (Week %V) ", 30)
+mytextclock = awful.widget.textclock(clock_format, 30)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -424,17 +426,13 @@ awful.rules.rules = {
 			"Thunar",
 			"Gnuplot",
 			"Steam",
+			"hl_linux",
 			"Gwenview" } },
 		properties = { floating = true } },
 	{ rule = { instance = "plugin-container" }, properties = { floating = true } },
 	{ rule = { instance = "exe", class="Exe" }, properties = { floating = true } },
-	-- Xfe's archive extract
-	{ rule = { class = "Xfe", name = "Extract archive" },
-		properties = { floating = true } },
 	-- Firefox downloads
 	{ rule = { class = "Firefox" }, except = { instance = "Navigator" },
-		properties = { floating = true } },
-	{ rule = { class = "hl_linux" },
 		properties = { floating = true } }
 }
 
