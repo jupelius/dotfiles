@@ -15,7 +15,7 @@ syntax on
 set background=dark
 colorscheme wombat
 
-set sessionoptions=buffers,sesdir,folds,resize,tabpages
+set sessionoptions=buffers,sesdir,folds,tabpages
 set cursorline
 
 " Turn on Pathogen
@@ -27,6 +27,7 @@ map § <ESC>
 map! § <ESC>
 
 """ Tab bindings
+
 " Previous tab
 map <C-K>h <ESC>:tabprevious<CR>
 map! <C-K>h <ESC>:tabprevious<CR>
