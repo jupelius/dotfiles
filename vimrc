@@ -10,6 +10,8 @@ set ruler
 set hls
 set incsearch
 set number
+set autoread
+set showcmd
 syntax on
 
 set background=dark
