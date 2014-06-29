@@ -19,7 +19,7 @@ local termcolor_unfocus = "#0B243B"
 -- Clock widget format, delete this if you want to use the default format
 local clock_format = " %A %d.%m, %H:%M (Week %V) "
 -- Wallpaper file
-beautiful.wallpaper = "/home/jupelius/Wallpapers/korput.png"
+beautiful.wallpaper = "/home/jupelius/Wallpapers/planeetta.jpg"
 
 terminal = "konsole"
 editor = os.getenv("EDITOR") or "vim"
@@ -298,12 +298,12 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
 	awful.key({ modkey,           }, "d",      function () open_filebrowser() end),
 
-	awful.key({ modkey,           }, "l",      function () awful.tag.incmwfact( 0.05)    end),
 	awful.key({ modkey,           }, "h",      function () awful.tag.incmwfact(-0.05)    end),
-	awful.key({ modkey, "Shift"   }, "h",      function () awful.tag.incnmaster( 1)      end),
-	awful.key({ modkey, "Shift"   }, "l",      function () awful.tag.incnmaster(-1)      end),
-	awful.key({ modkey, "Control" }, "h",      function () awful.tag.incncol( 1)         end),
-	awful.key({ modkey, "Control" }, "l",      function () awful.tag.incncol(-1)         end),
+	awful.key({ modkey,           }, "l",      function () awful.tag.incmwfact( 0.05)    end),
+	awful.key({ modkey, "Shift"   }, "h",      function () awful.tag.incnmaster(-1)      end),
+	awful.key({ modkey, "Shift"   }, "l",      function () awful.tag.incnmaster( 1)      end),
+	awful.key({ modkey, "Control" }, "h",      function () awful.tag.incncol(-1)         end),
+	awful.key({ modkey, "Control" }, "l",      function () awful.tag.incncol( 1)         end),
 	awful.key({ modkey,           }, "space",  function () awful.layout.inc(layouts,  1) end),
 	awful.key({ modkey, "Shift"   }, "space",  function () awful.layout.inc(layouts, -1) end),
 	awful.key({ modkey, "Control" }, "n", awful.client.restore),
@@ -427,6 +427,7 @@ awful.rules.rules = {
 			"Gnuplot",
 			"Steam",
 			"hl_linux",
+			"chocolate-doom",
 			"Gwenview" } },
 		properties = { floating = true } },
 	{ rule = { instance = "plugin-container" }, properties = { floating = true } },
