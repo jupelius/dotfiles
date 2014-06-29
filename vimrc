@@ -12,6 +12,7 @@ set incsearch
 set number
 set autoread
 set showcmd
+set tabpagemax=25
 syntax on
 
 set background=dark
