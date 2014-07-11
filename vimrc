@@ -13,6 +13,7 @@ set number
 set autoread
 set showcmd
 set tabpagemax=25
+set listchars=eol:$,tab:\|\ ,trail:~,nbsp:+
 syntax on
 
 set background=dark
