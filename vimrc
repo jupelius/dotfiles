@@ -76,6 +76,8 @@ map <C-K>Q <ESC>:wa<CR>:mksession!<CR>:qa<CR>
 map <C-K>i <ESC>:call WriteIncludeGuard()<CR>
 " Add C compilation directive
 map <C-K>e <ESC>:call WriteExternCDef()<CR>
+" Toggle list (show whitespace)
+map <C-K>s <ESC>:set list!<CR>
 
 """ Functions
 
