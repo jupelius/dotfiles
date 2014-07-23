@@ -5,22 +5,28 @@ set autoindent
 set smartindent
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
+set expandtab
 set showmatch
 set ruler
 set hls
 set incsearch
+set smartcase
 set number
 set autoread
 set showcmd
 set tabpagemax=25
 set listchars=eol:$,tab:\|\ ,trail:~,nbsp:+
+set laststatus=2
+set lazyredraw
+set sessionoptions=buffers,sesdir,folds,tabpages
+set cursorline
+set wildignore=.o,.exe,.dll,.so,.class,.pyc
+
 syntax on
 
 set background=dark
 colorscheme wombat
-
-set sessionoptions=buffers,sesdir,folds,tabpages
-set cursorline
 
 " Turn on Pathogen
 execute pathogen#infect()
