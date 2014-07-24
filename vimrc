@@ -32,6 +32,9 @@ colorscheme wombat
 execute pathogen#infect()
 filetype plugin indent on
 
+" Enable super fancy powerline glyphs
+let g:airline_powerline_fonts = 1
+
 " Esc is too far away
 map § <ESC>
 map! § <ESC>
