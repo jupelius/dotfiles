@@ -40,12 +40,12 @@ function toggle_mute()
 	os.execute("amixer sset " .. audio_channel .. " toggle playback")
 end
 
-function ncmpcpp_next_song()
-	os.execute("ncmpcpp next")
+function mpc_next_song()
+	os.execute("mpc -p 20555 next")
 end
 
-function ncmpcpp_toggle_pause()
-	os.execute("ncmpcpp toggle")
+function mpc_toggle_pause()
+	os.execute("mpc -p 20555 toggle")
 end
 
 function lock_session()
@@ -105,7 +105,7 @@ end
 -- Added by Jupelius: "Connect" certain tags
 -- If you select a connected tag it will select the corresponding tag in other screens too
 tags = {
-	names_primary = { "www", "torrents", "coding", 4, 5, 6, 7, 8, "chess" },
+	names_primary = { "www", "torrents", "coding", 4, 5, 6, 7, "email", "chess" },
 	names_secondary = { "irc", "music", "coding", "skype", 5, 6, 7, 8, "chess" },
 	names_default = { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
 	connected = { false, false, false, false, false, false, false, false, false },
@@ -326,8 +326,8 @@ globalkeys = awful.util.table.join(
 	awful.key({ }, "XF86AudioLowerVolume", function () volume_down() end),
 	awful.key({ }, "XF86AudioMute", function () toggle_mute() end),
 	-- Functions to control ncmpcpp
-	awful.key({ modkey, "Control" }, "Right", function () ncmpcpp_next_song() end),
-	awful.key({ modkey, "Control" }, "Left", function () ncmpcpp_toggle_pause() end),
+	awful.key({ modkey, "Control" }, "Right", function () mpc_next_song() end),
+	awful.key({ modkey, "Control" }, "Left", function () mpc_toggle_pause() end),
 
 	-- and mouse focus toggle
 	awful.key({ modkey }, "s", function() mousefocus_enabled = not mousefocus_enabled end),
