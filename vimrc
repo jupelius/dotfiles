@@ -99,7 +99,7 @@ function! WriteIncludeGuard()
 	else
 		let name = substitute(toupper(name), '\W', '_', 'g') . '_GUARD'
 		call append(0, ['#ifndef ' . name, '#define ' . name])
-		call append(line('$'), '#endif /* ' . name . ' */')
+		call append(line('$'), '#endif /* !' . name . ' */')
 	endif
 endfunction
 
