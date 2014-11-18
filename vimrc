@@ -26,7 +26,7 @@ set wildignore=.o,.exe,.dll,.so,.class,.pyc
 syntax on
 
 set background=dark
-colorscheme wombat
+colorscheme wombat256mod
 
 " Turn on Pathogen
 execute pathogen#infect()
