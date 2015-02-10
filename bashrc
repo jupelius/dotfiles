@@ -10,6 +10,7 @@ fi
 
 export HISTCONTROL=ignoredups
 export TERM=xterm-256color
+
 # for tmux: export 256color
 [ -n "$TMUX" ] && export TERM=screen-256color
 
@@ -35,6 +36,14 @@ ixcat() {
 	fi
 }
 
+sprungecat() {
+	if [ "$1" ]; then
+		curl -F sprunge=@- sprunge.us < $1
+	else
+		curl -F sprunge=@- sprunge.us
+	fi
+}
+
 godir() {
 	if [ "$1" ]; then
 		if [ ! -d "$1" ]; then
@@ -44,5 +53,43 @@ godir() {
 	fi
 }
 
-export EDITOR=vim
-export BROWSER=firefox
+skaalaa() {
+    if [ $# -lt 3 ]; then
+        echo "Usage: <GEOMETRY> <OUTPUT DIR> <FILE(S)>"
+        return 1
+    fi
+
+    GEOMETRY=$1
+    OUTPUT=$2
+    COUNT=0
+    shift 2
+
+    echo "Geometry is '$GEOMETRY', output directory is '$OUTPUT'"
+    mkdir -p $OUTPUT
+    while (( $# )); do
+        echo "Scaling $1..."
+        convert -scale $GEOMETRY $1 $OUTPUT/$1
+        if (( $? )); then
+            echo "convert returned $?! Exiting..."
+            return
+        fi
+        let COUNT=$COUNT+1
+        shift
+    done
+
+    echo "Succesfully scaled $COUNT files."
+}
+
+kt_upload() {
+	if [ "$1" ]; then
+		if [ $1 -eq 0 ]; then
+			echo "Setting KTorrent upload rate to unlimited."
+		else
+			echo "Setting KTorrent upload rate to $1 KB/s."
+		fi
+		DISPLAY=:0 qdbus org.ktorrent.ktorrent /settings setMaxUploadRate $1
+		DISPLAY=:0 qdbus org.ktorrent.ktorrent /settings apply
+	else
+		echo "No upload rate specified!"
+	fi
+}
