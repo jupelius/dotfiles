@@ -13,15 +13,13 @@ local menubar = require("menubar")
 
 -- Added by Jupelius, set the default value here
 local mousefocus_enabled = true
--- Added by Jupelius: Different border for Konsole windows
-local termcolor_focus = "#0080FF"
-local termcolor_unfocus = "#0B243B"
 -- Clock widget format, delete this if you want to use the default format
 local clock_format = " %A %d.%m, %H:%M (Week %V) "
 -- Wallpaper file
 beautiful.wallpaper = "/home/jupelius/Wallpapers/planeetta.jpg"
+beautiful.border_focus  = "#2288ee"
 
-terminal = "konsole"
+terminal = "termite"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
@@ -412,23 +410,16 @@ awful.rules.rules = {
 		focus = awful.client.focus.filter,
 		keys = clientkeys,
 		buttons = clientbuttons } },
-	-- Konsole borders
-	{ rule = { class = "konsole" },
-		properties = { border_color = termcolor_unfocus } },
 	-- Floating windows by class
 	{ rule_any = { class = {
 			"Smplayer",
 			"smplayer",
-			"Gimp",
 			"Wine",
 			"Ark",
 			"Xfe",
 			"Thunar",
 			"Gnuplot",
-			"Steam",
-			"hl_linux",
-			"chocolate-doom",
-			"Gwenview" } },
+			"Steam", } },
 		properties = { floating = true } },
 	{ rule = { instance = "plugin-container" }, properties = { floating = true } },
 	{ rule = { instance = "exe", class="Exe" }, properties = { floating = true } },
@@ -494,24 +485,8 @@ client.connect_signal("manage", function (c, startup)
 	end
 end)
 
-client.connect_signal("focus",
-function(c)
-	if c.class ~= "Konsole" then
-		c.border_color = beautiful.border_focus
-	else
-		c.border_color = termcolor_focus
-	end
-end)
-
--- Modified by Jupelius: Don't remove borders from Konsole windows
-client.connect_signal("unfocus",
-function(c)
-	if c.class ~= "Konsole" then
-		c.border_color = beautiful.border_normal
-	else
-		c.border_color = termcolor_unfocus
-	end
-end)
+client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 -- Added by Jupelius: Handle "connected" tags
 -- Add 'capi.tag.add_signal("property::connected")' to /usr/share/awesome/awful/tag.lua
