@@ -100,13 +100,10 @@ if beautiful.wallpaper then
 end
 
 -- Define a tag table which hold all screen tags.
--- Added by Jupelius: "Connect" certain tags
--- If you select a connected tag it will select the corresponding tag in other screens too
 tags = {
-	names_primary = { "www", "torrents", "coding", 4, 5, 6, 7, "email", "chess" },
-	names_secondary = { "irc", "music", "coding", "skype", 5, 6, 7, 8, "chess" },
+	names_primary = { "www", "torrents", "coding", 4, 5, 6, 7, "email", 9 },
+	names_secondary = { "irc", "music", "coding", "skype", 5, 6, 7, 8, 9 },
 	names_default = { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
-	connected = { false, false, false, false, false, false, false, false, false },
 }
 
 for s = 1, screen.count() do
@@ -116,11 +113,6 @@ for s = 1, screen.count() do
 	    tags[s] = awful.tag(tags.names_secondary, s, layouts[3])
 	else
 	    tags[s] = awful.tag(tags.names_default, s, layouts[1])
-	end
-
-	-- Set the default state of connected tags
-	for i, tag in pairs(awful.tag.gettags(s)) do
-		awful.tag.setproperty(tag, "connected", tags.connected[i])
 	end
 end
 
@@ -369,10 +361,6 @@ for i = 1, keynumber do
 				awful.tag.viewonly(tags[screen][i])
 			end
 		end),
-		awful.key({ modkey, "Mod1" }, "#" .. i + 9,
-			function ()
-				toggle_connection(tags[mouse.screen][i])
-			end),
 	awful.key({ modkey, "Control" }, "#" .. i + 9,
 		function ()
 			local screen = mouse.screen
@@ -419,6 +407,7 @@ awful.rules.rules = {
 			"Xfe",
 			"Thunar",
 			"Gnuplot",
+            "hl_linux",
 			"Steam", } },
 		properties = { floating = true } },
 	{ rule = { instance = "plugin-container" }, properties = { floating = true } },
@@ -487,48 +476,3 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
--- Added by Jupelius: Handle "connected" tags
--- Add 'capi.tag.add_signal("property::connected")' to /usr/share/awesome/awful/tag.lua
--- to get rid of the warnings
-tag.connect_signal("property::selected",
-function(t)
-	if awful.tag.getproperty(t, "connected") and t.selected then
-		local tag_num = awful.tag.getidx(t)
-
-		for s = 1, screen.count() do
-			if s ~= awful.tag.getscreen(t) then
-				local tags = awful.tag.gettags(s)
-				if tags[tag_num] and not tags[tag_num].selected then
-					awful.tag.viewmore({ tags[tag_num] }, s)
-				end
-			end
-		end
-	end
-end)
-
--- Toggles the connection state of the given tag
-function toggle_connection(tag)
-	local tag_num = awful.tag.getidx(tag)
-	local newstate = true
-
-	if awful.tag.getproperty(tag, "connected") then
-		newstate = false
-	end
-
-	for s = 1, screen.count() do
-		local tags = awful.tag.gettags(s)
-		awful.tag.setproperty(tags[tag_num], "connected", newstate)
-	end
-
-	local msg = ""
-	if not newstate then
-		msg = "dis"
-	end
-
-	naughty.notify({
-		title = "Tag " .. tag_num,
-		text = "Tag is now " .. msg .. "connected.",
-		screen = awful.tag.getscreen(tag),
-	})
-end
