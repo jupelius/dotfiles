@@ -87,6 +87,14 @@ map <C-K>i <ESC>:call WriteIncludeGuard()<CR>
 map <C-K>e <ESC>:call WriteExternCDef()<CR>
 " Toggle list (show whitespace)
 map <C-K>s <ESC>:set list!<CR>
+" Toggle NERDTree
+map <C-K>d <ESC>:NERDTree<CR>
+" Toggle Tagbar
+map <C-K>t <ESC>:TagbarOpen fj<CR>
+
+""" Tagbar configuration
+let g:tagbar_map_jump = ["<CR>", "o"]
+let g:tagbar_map_togglefold = "za"
 
 """ Functions
 
