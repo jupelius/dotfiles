@@ -22,6 +22,7 @@ set lazyredraw
 set sessionoptions=buffers,sesdir,folds,tabpages
 set cursorline
 set wildignore=.o,.exe,.dll,.so,.class,.pyc
+set noswapfile
 
 syntax on
 
@@ -100,23 +101,23 @@ let g:tagbar_map_togglefold = "za"
 
 " Writes multiple inclusion guard defines to current buffer
 function! WriteIncludeGuard()
-	let name = expand("%:t")
-	
-	if empty(name)
-		echom "No file name!"
-	else
-		let name = substitute(toupper(name), '\W', '_', 'g') . '_GUARD'
-		call append(0, ['#ifndef ' . name, '#define ' . name])
-		call append(line('$'), '#endif /* !' . name . ' */')
-	endif
+    let name = expand("%:t")
+
+    if empty(name)
+        echom "No file name!"
+    else
+        let name = substitute(toupper(name), '\W', '_', 'g') . '_GUARD'
+        call append(0, ['#ifndef ' . name, '#define ' . name])
+        call append(line('$'), '#endif /* !' . name . ' */')
+    endif
 endfunction
 
 " C compilation defines for C++
 function! WriteExternCDef()
-	call append(0, '#ifdef __cplusplus')
-	call append(1, 'extern "C" {')
-	call append(2, '#endif')
-	call append(line('$'), '#ifdef __cplusplus')
-	call append(line('$'), '}')
-	call append(line('$'), '#endif')
+    call append(0, '#ifdef __cplusplus')
+    call append(1, 'extern "C" {')
+    call append(2, '#endif')
+    call append(line('$'), '#ifdef __cplusplus')
+    call append(line('$'), '}')
+    call append(line('$'), '#endif')
 endfunction
