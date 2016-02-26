@@ -74,7 +74,7 @@ skaalaa() {
     mkdir -p $OUTPUT
     while (( $# )); do
         echo "Scaling $1..."
-        convert -scale $GEOMETRY $1 $OUTPUT/$1
+        convert -scale $GEOMETRY "$1" "$OUTPUT/$1"
         if (( $? )); then
             echo "convert returned $?! Exiting..."
             return
