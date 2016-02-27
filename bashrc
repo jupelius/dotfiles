@@ -1,8 +1,18 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+GIT_COMPLETION=""
+
 if [ -f /usr/share/git/git-prompt.sh ]; then
-    source /usr/share/git/git-prompt.sh
+    GIT_COMPLETION=/usr/share/git/git-prompt.sh
+elif [ -f /usr/share/bash-completion/bash_completion ]; then
+    GIT_COMPLETION=/usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+    GIT_COMPLETION=/etc/bash_completion
+fi
+
+if [ -n "$GIT_COMPLETION" ]; then
+    source $GIT_COMPLETION
 
     if [ -n "$SSH_CLIENT" ]; then
         PS1='[\[\e[1;37m\]\u\[\e[0;31m\]@\[\e[1;37m\]\h \[\e[0;32m\]\w\[\e[0;36m\]$(__git_ps1)\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
@@ -11,9 +21,9 @@ if [ -f /usr/share/git/git-prompt.sh ]; then
     fi
 else
     if [ -n "$SSH_CLIENT" ]; then
-        PS1='[\[\e[1m\]\u@\h\[\e[0m\] \[\e[0;31m\]\w\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
+        PS1='[\[\e[1;37m\]\u\[\e[0;31m\]@\[\e[1;37m\]\h \[\e[0;32m\]\w\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
     else
-        PS1='[\[\e[1m\]\u@\h\[\e[0m\] \[\e[0;32m\]\w\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
+        PS1='[\[\e[1m\]\u@\h \[\e[0;32m\]\w\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
     fi
 fi
 
