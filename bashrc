@@ -43,6 +43,7 @@ fi
 # tarball <tarball_name> <target>
 alias tarball='tar cvzf'
 alias ret='tmux attach'
+alias ngrep='grep -n --color'
 
 ixcat() {
 	if [ "$1" ]; then
