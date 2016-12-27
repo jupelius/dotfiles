@@ -30,6 +30,7 @@ fi
 export HISTCONTROL=ignoredups
 export TERM=xterm-256color
 export XKB_DEFAULT_LAYOUT=fi
+export EDITOR=vim
 
 # for tmux: export 256color
 [ -n "$TMUX" ] && export TERM=screen-256color
