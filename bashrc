@@ -45,6 +45,10 @@ fi
 alias tarball='tar cvzf'
 alias ret='tmux attach'
 alias ngrep='grep -n --color'
+alias master="git checkout master"
+alias gt="git status"
+alias gl="git log -n 3"
+alias gd="git diff"
 
 ixcat() {
 	if [ "$1" ]; then
