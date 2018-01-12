@@ -49,6 +49,12 @@ alias master="git checkout master"
 alias gt="git status"
 alias gl="git log -n 3"
 alias gd="git diff"
+alias gdn="git diff --name-only"
+alias gdh="git diff HEAD~"
+alias gdhn="git diff --name-only HEAD~"
+alias gb="git branch"
+alias telkkukiinni='xrandr --output HDMI1 --auto --right-of LVDS1'
+alias telkkupois='xrandr --output HDMI1 --off'
 
 ixcat() {
 	if [ "$1" ]; then
