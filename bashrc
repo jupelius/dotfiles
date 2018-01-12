@@ -107,17 +107,3 @@ skaalaa() {
 
     echo "Succesfully scaled $COUNT files."
 }
-
-kt_upload() {
-	if [ "$1" ]; then
-		if [ $1 -eq 0 ]; then
-			echo "Setting KTorrent upload rate to unlimited."
-		else
-			echo "Setting KTorrent upload rate to $1 KB/s."
-		fi
-		DISPLAY=:0 qdbus org.ktorrent.ktorrent /settings setMaxUploadRate $1
-		DISPLAY=:0 qdbus org.ktorrent.ktorrent /settings apply
-	else
-		echo "No upload rate specified!"
-	fi
-}
