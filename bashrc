@@ -12,7 +12,7 @@ elif [ -f /etc/bash_completion ]; then
 fi
 
 if [ -n "$GIT_COMPLETION" ]; then
-    source $GIT_COMPLETION
+    source "$GIT_COMPLETION"
 
     if [ -n "$SSH_CLIENT" ]; then
         PS1='[\[\e[1;37m\]\u\[\e[0;31m\]@\[\e[1;37m\]\h \[\e[0;32m\]\w\[\e[0;36m\]$(__git_ps1)\[\e[0m\]]\[\e[0;35m\]\$\[\e[0m\] '
@@ -29,7 +29,7 @@ fi
 
 export HISTCONTROL=ignoredups
 export TERM=xterm-256color
-export XKB_DEFAULT_LAYOUT=fi
+export XKB_DEFAULT_LAYOUT="fi"
 export EDITOR=vim
 
 # for tmux: export 256color
@@ -37,7 +37,7 @@ export EDITOR=vim
 
 # enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ]; then
-    eval "`dircolors -b`"
+    eval "$(dircolors -b)"
     alias ls='ls --color=auto'
 fi
 
@@ -66,7 +66,7 @@ ixcat() {
 
 sprungecat() {
 	if [ "$1" ]; then
-		curl -F sprunge=@- sprunge.us < $1
+		curl -F sprunge=@- sprunge.us < "$1"
 	else
 		curl -F sprunge=@- sprunge.us
 	fi
@@ -75,9 +75,9 @@ sprungecat() {
 godir() {
 	if [ "$1" ]; then
 		if [ ! -d "$1" ]; then
-			mkdir $1
+			mkdir "$1"
 		fi
-		cd $1
+		cd "$1" || return
 	fi
 }
 
@@ -93,15 +93,14 @@ skaalaa() {
     shift 2
 
     echo "Geometry is '$GEOMETRY', output directory is '$OUTPUT'"
-    mkdir -p $OUTPUT
+    mkdir -p "$OUTPUT"
     while (( $# )); do
         echo "Scaling $1..."
-        convert -scale $GEOMETRY "$1" "$OUTPUT/$1"
-        if (( $? )); then
+        if ! convert -scale "$GEOMETRY" "$1" "$OUTPUT/$1"; then
             echo "convert returned $?! Exiting..."
             return
         fi
-        let COUNT=$COUNT+1
+        (( COUNT=COUNT+1 ))
         shift
     done
 
