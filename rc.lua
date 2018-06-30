@@ -38,6 +38,14 @@ function toggle_mute()
 	os.execute("amixer sset " .. audio_channel .. " toggle playback")
 end
 
+function brightness_up()
+	os.execute("xbacklight -inc 10")
+end
+
+function brightness_down()
+	os.execute("xbacklight -dec 10")
+end
+
 function lock_session()
 	awful.util.spawn("xlock -mode blank")
 end
@@ -330,6 +338,10 @@ globalkeys = awful.util.table.join(
 	awful.key({ }, "XF86AudioRaiseVolume", function () volume_up() end),
 	awful.key({ }, "XF86AudioLowerVolume", function () volume_down() end),
 	awful.key({ }, "XF86AudioMute", function () toggle_mute() end),
+
+    -- Screen brightness
+	awful.key({ }, "XF86MonBrightnessUp", function () brightness_up() end),
+	awful.key({ }, "XF86MonBrightnessDown", function () brightness_down() end),
 
 	-- and mouse focus toggle
 	awful.key({ modkey }, "s", function() mousefocus_enabled = not mousefocus_enabled end),
