@@ -27,11 +27,11 @@ modkey = "Mod4"
 local audio_channel = "Master"
 
 function volume_up()
-	os.execute("amixer sset " .. audio_channel .. " 2%+")
+	os.execute("amixer sset " .. audio_channel .. " 5%+")
 end
 
 function volume_down()
-	os.execute("amixer sset " .. audio_channel .. " 2%-")
+	os.execute("amixer sset " .. audio_channel .. " 5%-")
 end
 
 function toggle_mute()
