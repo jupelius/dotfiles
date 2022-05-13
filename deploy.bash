@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-set -e
-
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_SUFFIX="_backup"
 
 _copy()
 {
-    cp -v -b --suffix="${BACKUP_SUFFIX}" "${THISDIR}/$1" "$2"
+    echo "Copy '$1' to '$2'? (Y/n)"
+    read -sn 1 choice
+    [[ "$choice" != "n" && "$choice" != "N" ]] && cp -v -b --suffix="${BACKUP_SUFFIX}" "${THISDIR}/$1" "$2"
 }
 
 _copy bash_profile ~/.bash_profile
