@@ -29,10 +29,6 @@ syntax on
 set background=dark
 colorscheme wombat256mod
 
-" Turn on Pathogen
-execute pathogen#infect()
-filetype plugin indent on
-
 " Enable super fancy powerline glyphs
 let g:airline_powerline_fonts = 1
 
