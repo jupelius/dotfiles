@@ -32,6 +32,9 @@ colorscheme wombat256mod
 " Enable super fancy powerline glyphs
 let g:airline_powerline_fonts = 1
 
+" Fix snipmate
+let g:snipMate = { 'snippet_version' : 1 }
+
 " Esc is too far away
 map § <ESC>
 map! § <ESC>
