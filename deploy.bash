@@ -12,6 +12,7 @@ _copy()
 
 _copy bash_profile ~/.bash_profile
 _copy bashrc ~/.bashrc
+_copy gitconfig ~/.gitconfig
 _copy rc.lua ~/.config/awesome/
 _copy tmux.conf ~/.tmux.conf
 _copy vimrc ~/.vim/vimrc
