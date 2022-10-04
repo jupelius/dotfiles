@@ -49,8 +49,6 @@ alias gdn="git diff --name-only"
 alias gdh="git diff HEAD~"
 alias gdhn="git diff --name-only HEAD~"
 alias gb="git branch"
-alias telkkukiinni='xrandr --output HDMI1 --auto --right-of LVDS1'
-alias telkkupois='xrandr --output HDMI1 --off'
 
 ixcat() {
 	if [ "$1" ]; then
@@ -75,30 +73,4 @@ godir() {
 		fi
 		cd "$1" || return
 	fi
-}
-
-skaalaa() {
-    if [ $# -lt 3 ]; then
-        echo "Usage: <GEOMETRY> <OUTPUT DIR> <FILE(S)>"
-        return 1
-    fi
-
-    GEOMETRY=$1
-    OUTPUT=$2
-    COUNT=0
-    shift 2
-
-    echo "Geometry is '$GEOMETRY', output directory is '$OUTPUT'"
-    mkdir -p "$OUTPUT"
-    while (( $# )); do
-        echo "Scaling $1..."
-        if ! convert -scale "$GEOMETRY" "$1" "$OUTPUT/$1"; then
-            echo "convert returned $?! Exiting..."
-            return
-        fi
-        (( COUNT=COUNT+1 ))
-        shift
-    done
-
-    echo "Succesfully scaled $COUNT files."
 }
