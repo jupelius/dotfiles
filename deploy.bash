@@ -27,6 +27,8 @@ deploy_vim_plugins() {
         "https://github.com/garbas/vim-snipmate"
         "https://github.com/honza/vim-snippets"
     )
+    local colorsdir="$HOME/.vim/pack/colors/opt"
+    local colorscheme="https://github.com/joshdick/onedark.vim.git"
 
     mkdir -p "$plugindir"
 
@@ -35,6 +37,11 @@ deploy_vim_plugins() {
     do
         git clone "$plugin"
     done
+    popd
+
+    mkdir -p "$colorsdir"
+    pushd "$colorsdir"
+    git clone "$colorscheme"
     popd
 }
 
