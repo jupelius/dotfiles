@@ -17,15 +17,15 @@ _copy()
 deploy_vim_plugins() {
     local plugindir="$HOME/.vim/pack/plugins/start"
     local plugins=(
-        "git@github.com:dense-analysis/ale.git"
-        "git@github.com:preservim/nerdtree.git"
-        "git@github.com:ervandew/supertab.git"
-        "git@github.com:preservim/tagbar.git"
-        "git@github.com:tomtom/tlib_vim.git"
-        "git@github.com:MarcWeber/vim-addon-mw-utils.git"
-        "git@github.com:vim-airline/vim-airline.git"
-        "git@github.com:garbas/vim-snipmate.git"
-        "git@github.com:honza/vim-snippets.git"
+        "https://github.com/dense-analysis/ale"
+        "https://github.com/preservim/nerdtree"
+        "https://github.com/ervandew/supertab"
+        "https://github.com/preservim/tagbar"
+        "https://github.com/tomtom/tlib_vim"
+        "https://github.com/MarcWeber/vim-addon-mw-utils"
+        "https://github.com/vim-airline/vim-airline"
+        "https://github.com/garbas/vim-snipmate"
+        "https://github.com/honza/vim-snippets"
     )
 
     mkdir -p "$plugindir"
