@@ -27,7 +27,8 @@ set noswapfile
 syntax on
 
 set background=dark
-colorscheme wombat256mod
+packadd! onedark.vim
+colorscheme onedark
 
 " Enable super fancy powerline glyphs
 let g:airline_powerline_fonts = 1
