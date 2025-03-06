@@ -45,6 +45,14 @@ deploy_vim_plugins() {
     popd
 }
 
+make_directories() {
+    mkdir ~/vim
+    mkdir -p ~/.config/awesome
+    mkdir ~/.config/alacritty
+}
+
+make_directories
+
 _copy bash_profile ~/.bash_profile
 _copy bashrc ~/.bashrc
 _copy gitconfig ~/.gitconfig
@@ -52,5 +60,6 @@ _copy rc.lua ~/.config/awesome/
 _copy tmux.conf ~/.tmux.conf
 _copy vimrc ~/.vim/vimrc
 _copy Xresources ~/.Xresources
+_copy alacritty.toml ~/.config/alacritty/
 
 confirm "Clone Vim plugins?" && deploy_vim_plugins

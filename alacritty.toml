@@ -1,0 +1,28 @@
+[font]
+normal = { family = "Source Code Pro", style = "Medium" }
+bold =   { style = "Bold" }
+italic = { style = "Medium Italic" }
+bold_italic = { style = "Bold Italic" }
+size = 12
+
+[colors.primary]
+background = "#141414"
+foreground = "#B1B1B1"
+[colors.normal]
+black = "#333333"
+red = "#B21818"
+green = "#18B218"
+yellow = "#B26818"
+blue = "#1818B2"
+magenta = "#B218B2"
+cyan = "#18B2B2"
+white = "#B2B2B2"
+[colors.bright]
+black = "#686868"
+red = "#FF5454"
+green = "#54FF54"
+yellow = "#FFFF54"
+blue = "#5454FF"
+magenta = "#FF54FF"
+cyan = "#54FFFF"
+white = "#FFFFFF"
