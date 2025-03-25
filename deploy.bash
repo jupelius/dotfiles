@@ -46,9 +46,9 @@ deploy_vim_plugins() {
 }
 
 make_directories() {
-    mkdir ~/vim
+    mkdir -p ~/.vim
     mkdir -p ~/.config/awesome
-    mkdir ~/.config/alacritty
+    mkdir -p ~/.config/alacritty
 }
 
 make_directories
