@@ -22,6 +22,7 @@ deploy_vim_plugins() {
         "https://github.com/ervandew/supertab"
         "https://github.com/preservim/tagbar"
         "https://github.com/tomtom/tlib_vim"
+        "https://github.com/tpope/vim-fugitive"
         "https://github.com/MarcWeber/vim-addon-mw-utils"
         "https://github.com/vim-airline/vim-airline"
         "https://github.com/garbas/vim-snipmate"
