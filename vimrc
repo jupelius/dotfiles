@@ -92,6 +92,10 @@ map <C-K>s <ESC>:set list!<CR>
 map <C-K>d <ESC>:NERDTree<CR>
 " Toggle Tagbar
 map <C-K>t <ESC>:TagbarOpen fj<CR>
+" Git grep word under cursor
+nmap <C-K>g <ESC>:Git grep <cword><CR>
+" Git blame
+nmap <C-K>b <ESC>:Git blame<CR>
 
 """ Tagbar configuration
 let g:tagbar_map_jump = ["<CR>", "o"]
