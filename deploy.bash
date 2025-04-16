@@ -52,15 +52,40 @@ make_directories() {
     mkdir -p ~/.config/alacritty
 }
 
-make_directories
+file_status() {
+    if [ ! -e "$2" ]; then
+        echo "$1:"
+    else
+        cmp -s "$1" "$2" && echo -e "\033[32;1m$1\033[0m:" || echo -e "\033[31;1m$1\033[0m:"
+    fi
+}
 
-_copy bash_profile ~/.bash_profile
-_copy bashrc ~/.bashrc
-_copy gitconfig ~/.gitconfig
-_copy rc.lua ~/.config/awesome/
-_copy tmux.conf ~/.tmux.conf
-_copy vimrc ~/.vim/vimrc
-_copy Xresources ~/.Xresources
-_copy alacritty.toml ~/.config/alacritty/
+case "$1" in
+    "run")
+        make_directories
 
-confirm "Clone Vim plugins?" && deploy_vim_plugins
+        _copy bash_profile ~/.bash_profile
+        _copy bashrc ~/.bashrc
+        _copy gitconfig ~/.gitconfig
+        _copy rc.lua ~/.config/awesome/rc.lua
+        _copy tmux.conf ~/.tmux.conf
+        _copy vimrc ~/.vim/vimrc
+        _copy Xresources ~/.Xresources
+        _copy alacritty.toml ~/.config/alacritty/alacritty.toml
+
+        confirm "Clone Vim plugins?" && deploy_vim_plugins
+        ;;
+    *)
+        file_status bash_profile ~/.bash_profile
+        file_status bashrc ~/.bashrc
+        file_status gitconfig ~/.gitconfig
+        file_status rc.lua ~/.config/awesome/rc.lua
+        file_status tmux.conf ~/.tmux.conf
+        file_status vimrc ~/.vim/vimrc
+        file_status Xresources ~/.Xresources
+        file_status alacritty.toml ~/.config/alacritty/alacritty.toml
+
+        echo -e "\nUsage:"
+        echo    "  $0 <run> - copy files in place"
+        ;;
+esac
