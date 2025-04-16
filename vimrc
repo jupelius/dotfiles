@@ -22,6 +22,7 @@ set lazyredraw
 set sessionoptions=buffers,sesdir,folds,tabpages
 set cursorline
 set wildignore=.o,.exe,.dll,.so,.class,.pyc
+set directory=$HOME/.vim/swap//
 set noswapfile
 
 syntax on
