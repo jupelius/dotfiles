@@ -1,3 +1,6 @@
 [user]
-	email = jussi.sivonen@ihme.org
+	email = jussi@sivonen.dev
 	name = Jussi Sivonen
+
+[grep]
+    lineNumber = true
